@@ -12,7 +12,7 @@ var Webfinger = function() {
 			var domain = parts[1];
 
 			$.ajax({
-				url: "http://"+domain+"/.well-known/host-meta",
+				url: "https://"+domain+"/.well-known/host-meta",
 				cache: false,
 				dataType: "xml",
 				success: function(xml){
@@ -27,8 +27,27 @@ var Webfinger = function() {
 						onError();
 					}
 				},
-				error: onError
-			});
+				error: function(){
+					$.ajax({
+						url: "http://"+domain+"/.well-known/host-meta",
+						cache: false,
+						dataType: "xml",
+						success: function(xml){
+							try {
+								$(xml).find('Link').each(function() {
+									var rel = $(this).attr('rel');
+									if(rel == linkRel) {
+										cb($(this).attr('template'));
+									}
+								});
+							} catch(e) {
+								onError();
+							}
+						},
+						error: onError
+					});
+				}
+			})
 		} else {
 			onError();
 		}
