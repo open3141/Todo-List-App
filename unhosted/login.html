@@ -4,15 +4,15 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
 <title>Todo List Login</title>
-<link rel="stylesheet" href="/css/uncompressed/reset.css" />
-<link rel="stylesheet" href="/css/uncompressed/text.css" />
-<link rel="stylesheet" href="/css/uncompressed/general.css" />
-<link rel="stylesheet" href="/css/todologin.css" />
+<link rel="stylesheet" href="../css/uncompressed/reset.css" />
+<link rel="stylesheet" href="../css/uncompressed/text.css" />
+<link rel="stylesheet" href="../css/uncompressed/general.css" />
+<link rel="stylesheet" href="../css/todologin.css" />
 
-<script src="/jQuery/jquery-1.6.1.min.js"></script>
-<script src="/unhosted/config.js"></script>
-<script src="/unhosted/wallet.js"></script>
-<script src="/unhosted/webfinger.js"></script>
+<script src="../jQuery/jquery-1.6.1.min.js"></script>
+<script src="config.js"></script>
+<script src="wallet.js"></script>
+<script src="webfinger.js"></script>
 <script>
 function takeMeIn(userAddress, haveAccount) {
 	if(haveAccount) {
@@ -25,9 +25,10 @@ function takeMeIn(userAddress, haveAccount) {
 					"userAddress": userAddress,
 					"davBaseUrl": davBaseUrl
 					});
+				var redirectBasestr = window.location.href.substring(0, window.location.href.length - config.callbackUrlRelChars)
 				window.location = davBaseUrl + "oauth2/auth"
 					+ "?client_id="+encodeURIComponent(config.clientId)
-					+ "&redirect_uri="+encodeURIComponent(config.callbackUrl)
+					+ "&redirect_uri="+encodeURIComponent( redirectBasestr  + config.callbackUrl)
 					+ "&scope="+encodeURIComponent(config.dataScope)
 					+ "&response_type=token"
 					+ "&user_address="+encodeURIComponent(userAddress);
