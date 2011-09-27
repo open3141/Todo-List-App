@@ -42,6 +42,7 @@ body {
   /*padding: 20px;*/
   margin: 30px;
   background: #aff;
+  position: relative;
 }
 
 #todoListDiv > div {
@@ -52,6 +53,13 @@ body {
   margin-top: 50px;
   margin-bottom: 50px;
   text-align: left;
+}
+
+#removeListButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 12pt;
 }
 
 #todoListButtons input {

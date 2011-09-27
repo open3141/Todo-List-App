@@ -342,6 +342,7 @@ function show() {
       s += '<a href="#" onclick="addItem(); return false;" style="text-decoration:none;">[+]</a>'
       s += "</div>";
     }
+    s += '<input id="removeListButton" type="submit" value="Remove List" onclick="removeList();"/>';
     $("#todoListDiv").remove();
     $("#todoWrapper").prepend('<div id="todoListDiv"></div>');
     $("#todoListDiv").html(s);
@@ -388,7 +389,6 @@ function show() {
             <!--<input type="submit" value="Remove Completed Items" onclick="finishItems();"/>-->
             <!--<input type="submit" value="Save" onclick="onsave();"/>-->
             <!--<input type="submit" value="New List" onclick="addList();"/>-->
-            <input type="submit" value="Remove List" onclick="removeList();"/>
            </div>
 
            <div id="todoListDiv">
