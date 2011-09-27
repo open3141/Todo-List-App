@@ -77,7 +77,9 @@ $(document).ready(function() {
             nextTab = parseInt(selected) + 1;
           }
           if ( nextTab < numTabs) {
-            $("#todoListDiv").tabs("select", nextTab);
+            var actualTabNum = lis.eq(nextTab).children('a').attr('href').substring(6) // 6 = "#tabs-".length
+                               || nextTab;
+            $("#todoListDiv").tabs("select", actualTabNum);
           }
         }
 
@@ -220,6 +222,7 @@ function addList() {
     todolist.lists.push({name: temp, tasks: []});
     <!--$("#todoListDiv").tabs("add", "#tabs-"+todolist.lists.length, "new list");-->
     show();
+    $("#todoListDiv").tabs('select', todolist.lists.length - 1);
   }
 
   onsave(false);
@@ -228,6 +231,10 @@ function addList() {
 function removeList() {
   if (confirm("Are you sure you want to remove this list?")) {
     var index = $("li", "#todoListDiv").index( $("#todoListDiv li.ui-tabs-selected"));
+    if (index == $("#todoListDiv").tabs("length") - 2) {
+      // if we remove the last actual list, go to the next to last actual list
+      $("#todoListDiv").tabs("select", index - 1);
+    }
     $("#todoListDiv").tabs("remove", index);
     onsave(false);
   }
