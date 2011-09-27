@@ -14,6 +14,7 @@
 <script src="unhosted/unhosted.js"></script>
 <script src="unhosted/gocrypto.js"></script>
 
+<link rel="stylesheet" href="/css/normalize.css" />
 <link rel="stylesheet" href="/css/todo.css" />
 <link rel="stylesheet" href="/css/ui-lightness/jquery-ui-1.8.14.custom.css" />
 
@@ -84,10 +85,10 @@ $(document).ready(function() {
         var selItem = $("#todoListDiv "+currentTab+" .item-selected");
         if (e.which == 74 || e.which == 75) { // 'j' key and 'k' key
           // select down/up
-          var items = selItem.parent().children("span");
+          var items = selItem.parent().children(".todoItem");
           var index = items.index(selItem);
           if (selItem.length == 0) {
-            $("#todoListDiv "+currentTab+" span").eq(0).addClass("item-selected");
+            $("#todoListDiv "+currentTab+" .todoItem").eq(0).addClass("item-selected");
           }
           else if (e.which == 74 && (parseInt(index) + 1)<items.length ) {
             items.eq(parseInt(index) + 1).addClass("item-selected");
@@ -115,7 +116,7 @@ $(document).ready(function() {
      ////////
      // item input functionality
 
-    $("div.todoText").live("click", editText);
+    $(".todoText").live("click", editText);
 
     $("input.todoTextInput").live("blur", function() {
       // change back to being uneditable
@@ -124,7 +125,7 @@ $(document).ready(function() {
       text = $.trim(text);
       if (text == "") {
         if ($t.parent().hasClass("item-selected")) {
-          $t.parent().siblings("span").eq(0).addClass("item-selected");
+          $t.parent().siblings(".todoItem").eq(0).addClass("item-selected");
         }
         $t.parent().remove();
       }
@@ -183,10 +184,11 @@ function addItem() {
   $t = $("#todoListDiv "+currentTab);
 
   var htm =
-     '<span class="todoItem">'
+     '<div class="todoItem">'
      +  '<input class="todoCheckbox" type="checkbox"/>'
-     +  '<div class="todoText">New Item</div>'
-     +  '</span>';
+     +  '<span class="todoText">New Item</span>'
+     +  '</div>';
+     //+  '<br/>';
 
   if ($t.children(".todoItem").length == 0) {
     $t.prepend(htm);
@@ -331,10 +333,11 @@ function show() {
       s += '<div id="tabs-'+j+'">';
       var list = todolist.lists[j].tasks;
       for(var i in list) {
-        s += '<span class="todoItem' + (list[i][1] == true ? " todoItemDone" : "") + '">'
+        s += '<div class="todoItem' + (list[i][1] == true ? " todoItemDone" : "") + '">'
           +  ' <input class="todoCheckbox" type="checkbox" '+ (list[i][1] == true ? "checked" : "") + '/>'
-          +  '<div class="todoText">'+list[i][0]+'</div>'
-          +  '</span>';
+          +  '<span class="todoText">'+list[i][0]+'</span>'
+          +  '</div>';
+          //+  '<br/>';
       }
       s += '<a href="#" onclick="addItem(); return false;" style="text-decoration:none;">[+]</a>'
       s += "</div>";

@@ -5,9 +5,9 @@ body {
 
 .todoItem {
   /*display: inline;*/
-  display: box;
-  display: -moz-box;
-  display: -webkit-box;
+  /*display: box;*/
+  /*display: -moz-box;*/
+  /*display: -webkit-box;*/
   /*margin-left: 3.5em;*/
 }
 
@@ -25,7 +25,7 @@ body {
 }
 
 
-.todoItemDone div {
+.todoItemDone .todoText {
   text-decoration: line-through;
 }
 
