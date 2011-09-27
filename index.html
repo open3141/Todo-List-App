@@ -30,15 +30,11 @@ $(document).ready(function() {
     //
     // approach from http://www.catswhocode.com/blog/using-keyboard-shortcuts-in-javascript
 
-    var isCtrl = false;
-    var isShift = false;
-    $(document).keyup(function (e) {
-      if(e.which == 16) isShift=false;
-      if(e.which == 17) isCtrl=false;
-    });
     $(document).keydown(function (e) {
-      if(e.which == 16) isShift=true;
-      if(e.which == 17) isCtrl=true;
+
+      if (e.ctrlKey || e.altKey || e.shiftKey) {
+        return;
+      }
 
       var input = $("input.todoTextInput");
       if (input.length) {
