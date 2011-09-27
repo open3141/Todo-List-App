@@ -9,6 +9,7 @@ body {
   /*display: -moz-box;*/
   /*display: -webkit-box;*/
   /*margin-left: 3.5em;*/
+  position: relative;
 }
 
 .todoItem .todoCheckbox {
@@ -22,6 +23,7 @@ body {
 .todoItem.item-selected:before {
   content: '> ';
   position: absolute;
+  left: -1em;
 }
 
 
