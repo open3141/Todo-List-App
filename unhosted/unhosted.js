@@ -27,7 +27,9 @@ var DAV = function() {
 				if(xhr.status == 404) {
 					cb(null);
 				} else {
-					alert("error: got status "+xhr.status+" when doing basic auth GET on url "+keyToUrl(userAddress, key, wallet));
+					var errorMsg = "error: got status "+xhr.status+" when doing basic auth GET on url "+keyToUrl(userAddress, key, wallet);
+					console.log("Suggesting log out with error ["+errorMsg+"]");
+					$(window).trigger('DAVGetError');
 				}
 			}
 		});
@@ -43,7 +45,9 @@ var DAV = function() {
 			data: text,
 			success: cb,
 			error: function(xhr) {
-				alert("error: got status "+xhr.status+" when doing basic auth PUT on url "+keyToUrl(wallet.userAddress, key, wallet));
+				var errorMsg = "error: got status "+xhr.status+" when doing basic auth PUT on url "+keyToUrl(wallet.userAddress, key, wallet);
+				console.log("Suggesting log out with error ["+errorMsg+"]");
+				$(window).trigger('DAVPutError');
 			}
 		});
 	}

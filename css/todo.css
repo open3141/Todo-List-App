@@ -90,3 +90,14 @@ header {
 	/*box-shadow: 0 1px 0 rgb(198,237,164);*/
     margin-bottom: 0px;
 }
+
+.logoutSuggestion {
+  background: #f00;
+  width: 95%;
+  text-align: center;
+  margin: 10px auto;
+  padding: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}

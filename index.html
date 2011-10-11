@@ -150,6 +150,21 @@ $(document).ready(function() {
       }
     });
 
+    $(window).bind('DAVGetError', function () {
+      onlogout();
+    });
+
+    var receivedPutError = false;
+    $(window).bind('DAVPutError', function () {
+      if (!receivedPutError) {
+      $("header").after( "" +
+        '<div class="logoutSuggestion">' +
+        'Warning: Unable to submit any new changes. (Perhaps you logged in somewhere else?) ' +
+        '<br />You should log out and log back in again. </div>');
+        receivedPutError = true;
+      }
+    });
+
     <!--window.setTimeout("onsave();", saveTime);-->
     <!--$(window).unload(function() { onsave(); });-->
     <!--window.setInterval("onsave(false);", saveTime);-->
