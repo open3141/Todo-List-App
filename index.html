@@ -114,6 +114,7 @@ $(document).ready(function() {
     $(".todoText").live("click", editText);
 
     $("input.todoTextInput").live("blur", function() {
+      backup(todolist);
       // change back to being uneditable
       var $t = $(this);
       var text = $t.val();
@@ -146,6 +147,7 @@ $(document).ready(function() {
           $t.parent().remove();
           onsave(false);
         }
+        backup(todolist);
         $t[0].mytimeout = setTimeout(removeItem, 500);
       }
     });
@@ -209,6 +211,7 @@ function addItem() {
 
   $t.children(".todoItem").last().children(".todoText").click();
 
+  backup(todolist);
   onsave(false);
 }
 
@@ -227,6 +230,7 @@ function finishItems() {
 function addList() {
   var temp = prompt("Name of list:", "new list");
   if (temp) {
+    backup(todolist);
     todolist.lists.push({name: temp, tasks: []});
     <!--$("#todoListDiv").tabs("add", "#tabs-"+todolist.lists.length, "new list");-->
     show();
@@ -244,6 +248,7 @@ function removeList() {
       $("#todoListDiv").tabs("select", index - 1);
     }
     $("#todoListDiv").tabs("remove", index);
+    backup(todolist);
     onsave(false);
   }
 }
@@ -256,6 +261,7 @@ function removeList() {
 var unhosted = Unhosted();
 var currentUser;
 var todolist;
+var prevlist; // for undoing
 
 var saveTime = 30000;
 
@@ -281,6 +287,31 @@ function start() {
             show();                        //put values into the DOM.
         });
 
+}
+
+function backup(list) {
+  var newlist = {}
+  newlist.lists = [];
+  for (var i = 0; i < list.lists.length; i++) {
+    newlist.lists[i] = {name: list.lists[i].name, tasks: []};
+    for (var j = 0; j < list.lists[i].tasks.length; j++) {
+      newlist.lists[i].tasks[j] = [
+        list.lists[i].tasks[j][0],
+        list.lists[i].tasks[j][1]
+        ];
+    }
+  }
+  prevlist = newlist;
+}
+
+function undo() {
+  if (prevlist) {
+    var temp = todolist;
+    todolist = prevlist;
+    prevlist = temp;
+    show();
+    onsave(false);
+  }
 }
 
 function onsave(doShow) {
@@ -357,12 +388,14 @@ function show() {
       s += '<a href="#" onclick="addItem(); return false;" style="text-decoration:none;">[+]</a>'
       s += "</div>";
     }
+    s += '<input id="undoButton" type="submit" value="Undo" onclick="undo();"/>';
     s += '<input id="removeListButton" type="submit" value="Remove List" onclick="removeList();"/>';
     $("#todoListDiv").remove();
     $("#todoWrapper").prepend('<div id="todoListDiv"></div>');
     $("#todoListDiv").html(s);
     $("#todoListDiv").tabs().find(".ui-tabs-nav").sortable({
       update: function(evt, ui) {
+        backup(todolist);
         onsave(false);
       },
       items: "li:not(.add-list-tab)"

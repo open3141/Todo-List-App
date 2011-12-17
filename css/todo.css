@@ -62,6 +62,13 @@ body {
   font-size: 12pt;
 }
 
+#undoButton {
+  position: absolute;
+  bottom: 30px;
+  right: 0;
+  font-size: 12pt;
+}
+
 #todoListButtons input {
   /*border: none;*/
 }
